@@ -1,27 +1,2 @@
 <!--index.wxml-->
-<view class="commentList">
-    <image src="{{userInfo.avatarUrl}}" class="userinfo-avatar"></image>
-    <view class="comment-container">
-        <view class="container-top">
-            <text class="userinfo-name">{{userInfo.nickName}}</text>
-            <text class="comment-time">登录时间</text>
-        </view>
-        <view class="container-middle">
-            <text >评论</text>
-        </view>
-        <view class="container-footer">
-            <view >
-                <text class="iconfont icon-aixin "></text>
-                <text >赞</text>
-            </view>
-            <view >
-                <text class="iconfont icon-pinglun"></text>
-                <text >评论</text>
-            </view>
-            <view >
-                <text class="iconfont icon-share"></text>
-                <text >分享</text>
-            </view>
-        </view>
-    </view>
-</view>
+<myComlist id="myComlist"></myComlist>

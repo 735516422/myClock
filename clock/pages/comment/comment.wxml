@@ -1,0 +1,26 @@
+<!--pages/comment/comment.wxml-->
+<view class="comment">
+    <textarea placeholder-class="phcolor" class="comment-text" bindinput="commentText" auto-height="true" placeholder="说说今天发生的事情和收获..."></textarea>
+    <view class="share">
+        <view >
+            <text class="iconfont icon-shipin"></text>
+        </view>
+        <view >
+            <text class="iconfont icon-tupian"></text>
+        </view>
+        <view >
+            <text class="iconfont icon-maikefeng"></text>
+        </view>
+    </view>
+    <view class="dizhi clear">
+        <text class="iconfont icon-dizhi"></text>
+        <text class="">所在位置</text>
+        <text class="iconfont icon-arrow-right-copy-copy-copy"></text>
+    </view>
+    <view class="typeSo clear">
+        <text class="iconfont icon-diqiu"></text>
+        <text class="">公开 其他成员可见</text>
+        <text class="iconfont icon-arrow-right-copy-copy-copy"></text>
+    </view>
+    <input type="button" value="发表" class="comment-button"></input>
+</view>

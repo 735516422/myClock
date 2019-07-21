@@ -1,0 +1,95 @@
+/* pages/comment/comment.wxss */
+/*placeholder颜色大小*/
+.phcolor{
+    color: rgb(177, 170, 170);
+    font-size: 30rpx;
+}
+/*评论区*/
+.comment{
+    padding: 60rpx 30rpx;
+}
+.comment>.comment-text{
+    min-height: 200rpx;
+    max-height: 500rpx;
+    font-size: 30rpx;
+}
+/*分享种类*/
+.comment>.share{
+    display: flex;
+}
+.comment>.share>view{
+    width: 120rpx;
+    height: 120rpx;
+    border: 1px solid #ddd;
+    border-radius: 20rpx;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    margin-right: 10rpx;
+}
+.comment>.share>view>text{
+    font-size: 80rpx;
+    color: #808080;
+}
+/*地址*/
+.comment>.dizhi,
+.comment>.typeSo{
+    padding:20rpx 0;   
+}
+.comment>.dizhi{
+    border-bottom: 1px solid #ddd;
+}
+.comment>.dizhi>text{
+    color: #808080;
+    font-size: 30rpx;
+}
+.comment>.typeSo>text{
+    color: #808080;
+    font-size: 26rpx;
+}
+.comment>.dizhi>text:first-child,
+.comment>.typeSo>text:first-child{
+    padding-top: 5rpx;
+}
+.comment>.dizhi>text:not(:last-child),
+.comment>.typeSo>text:not(:last-child){
+    float: left;
+    margin-right:30rpx; 
+}
+
+.comment>.dizhi>text:last-child,
+.comment>.typeSo>text:last-child{
+    float: right;
+    padding-top: 5rpx;
+}
+.comment>.comment-button{
+    margin-top: 20rpx;
+    background: #808080;
+    color: white;
+    height: 80rpx;
+    border-radius: 10rpx;
+    text-align: center;
+}
+/*图标*/
+.icon-diqiu:before {
+    content: "\e60a";
+}
+
+.icon-arrow-right-copy-copy-copy:before {
+    content: "\e605";
+}
+
+.icon-dizhi:before {
+    content: "\e609";
+}
+.icon-shipin:before {
+    content: "\e604";
+}
+
+.icon-maikefeng:before {
+    content: "\e750";
+}
+
+.icon-tupian:before {
+    content: "\e674";
+}

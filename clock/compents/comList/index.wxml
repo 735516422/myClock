@@ -1,0 +1,30 @@
+<!--compents/comList/index.wxml-->
+<view class="commentList">
+    <image src="{{userInfo.avatarUrl}}" class="userinfo-avatar"></image>
+    <view class="comment-container">
+        <view class="container-top">
+            <text class="userinfo-name">{{userInfo.nickName}}</text>
+            <text class="comment-time">{{time}}</text>
+        </view>
+        <view class="container-middle">
+            <text >今天天气不错适合出行游玩</text>
+            <view >
+                <image src="{{img}}" wx:for="{{imgList}}" wx:key="imgIndex" wx:for-item="img" wx:for-index="imgIndex"/>       
+            </view>
+        </view>
+        <view class="container-footer">
+            <view >
+                <text class="iconfont icon-aixin "></text>
+                <text >赞</text>
+            </view>
+            <view >
+                <text class="iconfont icon-pinglun"></text>
+                <text >评论</text>
+            </view>
+            <view >
+                <text class="iconfont icon-share"></text>
+                <text >分享</text>
+            </view>
+        </view>
+    </view>
+</view>

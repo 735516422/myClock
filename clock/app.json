@@ -1,5 +1,7 @@
 {
   "pages": [
+    "pages/personal /personal ",
+    "pages/comment/comment",
     "pages/index/index",
     "pages/logs/logs"
   ],
@@ -16,7 +18,8 @@
         "text": "首页",
         "iconPath": "pages/tabs/home.png",
         "selectedIconPath": "pages/tabs/home-active.png"
-      },{
+      },
+      {
         "pagePath": "pages/index/index",
         "text": "我的",
         "iconPath": "pages/tabs/profile.png",

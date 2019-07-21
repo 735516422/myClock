@@ -1,0 +1,54 @@
+/* pages/personal /personal .wxss */
+/*个人中心*/
+.perTop{
+    display: flex;
+    position: relative;
+    align-items: top;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #3C434E;
+}
+
+/*用户头像*/
+.perTop>.userinfo-avatar {
+    width: 120rpx;
+    height: 120rpx;
+    margin: 20rpx;
+    border-radius: 50%;
+}
+/*用户名*/
+.perTop>text{
+    color: #fff;
+    font-size: 40rpx;
+}
+/*性别地区*/
+.perTop>view{
+    margin: 20rpx;
+    height: 100rpx;
+}
+.perTop .sex,
+.perTop .address{
+    font-size: 26rpx;
+    background-color: #505663;
+    color: #A5A8AB;
+    display: inline-block;
+    padding: 10rpx 20rpx;
+    border-radius:10rpx; 
+    margin-right: 10rpx;
+}
+.perButtom{
+    background: #3C434E;
+    padding-top: 10rpx;
+}
+.perButtom>.warp{
+    border-radius: 15rpx;
+    background: #fff;
+}
+/*字体图标*/
+.icon-nan:before {
+    content: "\e832";  
+}
+.icon-nv:before {
+    content: "\e658";
+  }

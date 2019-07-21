@@ -1,0 +1,18 @@
+<!--pages/personal /personal .wxml-->
+<view class="perTop">
+    <image src="{{userInfo.avatarUrl}}" class="userinfo-avatar"/>
+    <text >{{userInfo.nickName}}</text>
+    <view >
+        <text class="iconfont icon-nan sex">男</text>
+        <text class="address">地区</text>
+    </view>
+</view>
+<view class="perButtom">
+    <view class="warp">
+        <view >
+            <text >日记</text>
+            <text >赞过</text>
+        </view>
+        <myComlist id="myComlist"></myComlist>
+    </view>
+</view>
