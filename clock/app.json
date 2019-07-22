@@ -1,8 +1,8 @@
 {
   "pages": [
-    "pages/personal /personal ",
-    "pages/comment/comment",
     "pages/index/index",
+    "pages/personal/personal ",
+    "pages/comment/comment",
     "pages/logs/logs"
   ],
   "window": {

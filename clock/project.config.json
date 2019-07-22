@@ -15,7 +15,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.7.5",
 	"appid": "wx5dab8dacabbc77cb",
-	"projectname": "myclock",
+	"projectname": "clock",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},

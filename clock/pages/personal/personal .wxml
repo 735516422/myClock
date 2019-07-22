@@ -10,8 +10,8 @@
 <view class="perButtom">
     <view class="warp">
         <view >
-            <text >日记</text>
-            <text >赞过</text>
+            <text class="textFocus">日记</text>
+            <text class="textUnFocus">赞过</text>
         </view>
         <myComlist id="myComlist"></myComlist>
     </view>

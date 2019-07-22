@@ -46,5 +46,10 @@ Component({
         })
       }
     },
+    isTime:function(DATE){
+      this.setData({
+        time:DATE
+      });
+    }
   }
 })

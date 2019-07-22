@@ -19,9 +19,7 @@ Page({
       this.myComlist.isUserInfo(app);
       let i=new Date().getTime()-new Date("2019/7/20").getTime();
       let DATE = util.getTimeUntilNow(i);
-      this.setData({
-        time:DATE
-      });
+      this.myComlist.isTime(DATE);
   },
 
   /**

@@ -45,6 +45,28 @@
     border-radius: 15rpx;
     background: #fff;
 }
+.perButtom>.warp>view{
+    display: flex;
+    justify-content: center;
+    border: 1rpx solid #ddd;
+}
+.perButtom>.warp .textFocus,
+.perButtom>.warp .textUnFocus{
+    width: 20%;
+    text-align: center;
+    display: inline-block;
+    margin: 0 40rpx;
+    padding: 40rpx 0;
+}
+.perButtom>.warp .textFocus{
+    color: #000;
+    font-weight: bold;
+    border-bottom: 10rpx solid #000;
+}
+.perButtom>.warp .textUnFocus{
+    color: #B1B1B1;
+}
+
 /*字体图标*/
 .icon-nan:before {
     content: "\e832";  
