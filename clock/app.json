@@ -1,7 +1,7 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/personal/personal ",
+    "pages/personal/personal",
     "pages/comment/comment",
     "pages/logs/logs"
   ],
@@ -18,9 +18,14 @@
         "text": "首页",
         "iconPath": "pages/tabs/home.png",
         "selectedIconPath": "pages/tabs/home-active.png"
+      },{
+        "pagePath": "pages/comment/comment",
+        "text": "发布",
+        "iconPath": "pages/tabs/profile.png",
+        "selectedIconPath": "pages/tabs/profile-active.png"
       },
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/personal/personal",
         "text": "我的",
         "iconPath": "pages/tabs/profile.png",
         "selectedIconPath": "pages/tabs/profile-active.png"

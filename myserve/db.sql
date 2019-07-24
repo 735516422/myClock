@@ -5,6 +5,7 @@ USE clock;
 #用户列表
 CREATE TABLE userList(
     uid INT PRIMARY KEY AUTO_INCREMENT,
+    openId VARCHAR(128),
     pname VARCHAR(32),
     purl VARCHAR(64),
     age INT,

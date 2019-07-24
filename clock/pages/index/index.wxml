@@ -1,2 +1,5 @@
 <!--index.wxml-->
-<myComlist id="myComlist"></myComlist>
+<button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+<block wx:else>
+    <myComlist id="myComlist"></myComlist>
+</block>
