@@ -13,21 +13,51 @@
     max-height: 500rpx;
     font-size: 30rpx;
 }
-/*分享种类*/
 .comment>.share{
     display: flex;
+    flex-wrap: wrap;
 }
-.comment>.share>view{
+.comment>.share>.share-img,
+.comment>.share>.share-video,
+.comment>.share>.share-type{
     width: 120rpx;
     height: 120rpx;
     border: 1px solid #ddd;
     border-radius: 20rpx;
+    margin-right: 10rpx;
+}
+/*图片视频*/
+.comment>.share>.share-img,
+.comment>.share>.share-video{
+    position: relative;
+}
+.comment>.share>.share-video>video{
+    width: 100%;
+    height: 100%;
+}
+.comment>.share>.share-img>image{
+    width: 100%;
+    height: 100%;
+}
+.comment>.share>view>view{
+    position: absolute;
+    top:0px;
+    right: 0px;
+    background: #9b0303;
+    color: #ddd;
+    border-radius: 50%;
+    font-size: 20rpx;
+    font-weight: normal;
+    width: 20rpx;
+    height: 20rpx;
+}
+/*分享种类*/
+.comment>.share>.share-type{
     display: flex;
     align-items: center;
     justify-content:center;
-    margin-right: 10rpx;
 }
-.comment>.share>view>text{
+.comment>.share>.share-type>text{
     font-size: 80rpx;
     color: #808080;
 }
@@ -74,22 +104,30 @@
 .icon-diqiu:before {
     content: "\e60a";
 }
-
 .icon-arrow-right-copy-copy-copy:before {
     content: "\e605";
 }
-
 .icon-dizhi:before {
     content: "\e609";
 }
 .icon-shipin:before {
     content: "\e604";
 }
-
 .icon-maikefeng:before {
     content: "\e750";
 }
-
 .icon-tupian:before {
     content: "\e674";
+}
+.icon-zanting:before {
+    content: "\e60f";
+}
+.icon-bofang:before {
+    content: "\e606";
+}
+.icon-luyinji:before {
+    content: "\e610";
+}
+.icon-cross:before {
+    content: "\e61a";
 }

@@ -5,10 +5,13 @@ Page({
    * 页面的初始数据
    */
   data: {
-    text:"",
-    imgSrc:[],
-    videoSrc:[],
-    locationName:""
+    text:"",//评论内容
+    imgSrc:[],//发布图片
+    videoSrc:"",//视频  
+    locationName:"",//地址
+    timer:null,//定时器
+    RM:null,//录音
+    rmTimes:"00.00"
   },
 
   /**
@@ -22,6 +25,15 @@ Page({
        text:e.detail.value
      });
   },
+  //删除图片
+  delImg:function(e){
+    let index=e.target.dataset.id;
+    let imgSrc=this.data.imgSrc;
+    imgSrc.splice(index,1);
+    this.setData({
+      imgSrc:imgSrc
+    });
+  },
   //获取图片
   gotoShow: function(){
     var _this = this
@@ -33,7 +45,7 @@ Page({
         // success
         let paths=_this.data.imgSrc;
         paths.push.apply(paths,res.tempFilePaths);
-        console.log(paths)
+        //console.log(paths)
         _this.setData({
           imgSrc:paths
         })
@@ -46,6 +58,12 @@ Page({
       }
     })
   },
+  //删除视频
+  delvideo:function(){
+    this.setData({
+      videoSrc:""
+    });
+  },
   //获取视频
   videoShow:function(){
     var _this = this
@@ -54,12 +72,13 @@ Page({
       maxDuration: 60,
       camera: 'back',
       success(res) {
-        let paths=_this.data.videoSrc;
-        paths.push.apply(paths,res.tempFilePaths);
-        console.log(paths)
+        console.log(res);
+        let paths=res.tempFilePath;
         _this.setData({
           videoSrc:paths
         })
+        console.log(1,_this.data.videoSrc);
+        console.log(2,paths);
       }
     })
   },
@@ -74,6 +93,81 @@ Page({
         })
       }
     })
+  },
+  //录音
+  recorderShow:function(){
+    this.setData({
+      RM:wx.getRecorderManager()
+    })
+    let option = {
+      duration:10000,     //录音的时长，之前最大值好像只有1分钟，现在最长可以录音10分钟
+      format:'mp3',         //录音的格式，有aac和mp3两种   
+    }
+    let secondes=0;
+    let that=this;
+    this.data.RM.start(option);//开始录音   这么写的话，之后录音得到的数据，就是你上面写得数据。
+    this.data.RM.onStart(()=>{
+        console.log('录音开始事件');    //这个方法是录音开始事件，你可以写录音开始的时候图片或者页面的变化
+        this.Countdown(that,secondes);
+    })
+  },
+  // 倒计时
+  Countdown:function (that,secondes) {
+    let timer = setTimeout(function() {
+    console.log("----secondes----" + that.formatSeconds(secondes));
+    secondes++;
+    if(secondes>=600){
+      that.data.RM.stop();
+      clearTimeout(timer);
+      that:setData({
+        timer:null
+      });
+    }
+    that.setData({
+      rmTimes: that.formatSeconds(secondes),
+      timer:timer
+    });
+    that.Countdown(that,secondes);
+    }, 1000);
+  },
+  formatSeconds:function (value) {
+    var secondTime = parseInt(value); // 秒
+    var minuteTime = 0; // 分
+    var hourTime = 0; // 小时
+    if (secondTime > 60) { //如果秒数大于60，将秒数转换成整数
+      //获取分钟，除以60取整数，得到整数分钟
+      minuteTime = parseInt(secondTime / 60);
+      //获取秒数，秒数取佘，得到整数秒数
+      secondTime = parseInt(secondTime % 60);
+      //如果分钟大于60，将分钟转换成小时
+      if (minuteTime > 60) {
+        //获取小时，获取分钟除以60，得到整数小时
+        hourTime = parseInt(minuteTime / 60);
+        //获取小时后取佘的分，获取分钟除以60取佘的分
+        minuteTime = parseInt(minuteTime % 60);
+      }
+    }
+    var result;
+    //时间的展示方式为00:00
+    if(secondTime<10){
+        result = "0" + parseInt(secondTime);
+    }else{
+      result = "" + parseInt(secondTime);
+    }
+    if (minuteTime > 0) {
+      if (minuteTime<10){
+        result = "0" + parseInt(minuteTime) + ":" + result;
+      }else{
+        result = "" + parseInt(minuteTime) + ":" + result;
+      }
+    }else{
+        result = "00:" + result;
+    }
+    //由于限制时长最多为三分钟,小时用不到
+    if (hourTime > 0) {
+        result = "" + parseInt(hourTime) + ":" + result;
+    }
+    return result;
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

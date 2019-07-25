@@ -1,15 +1,31 @@
 <!--pages/comment/comment.wxml-->
 <view class="comment">
     <textarea placeholder-class="phcolor" class="comment-text" bindinput="commentText" auto-height="true" placeholder="说说今天发生的事情和收获..."></textarea>
+    <view class="audio">
+        <text class="iconfont icon-cross"></text>
+        <text >{{rmTimes}}</text>
+        <text>完成</text>
+        <text class="iconfont icon-zanting"></text>
+    </view>
     <view class="share">
-        <view >
+        <!--视频-->
+        <view class="share-video" wx:if="{{videoSrc!==''}}">
+            <video src="{{videoSrc}}" />
+            <view class="iconfont icon-cross" bindtap="delvideo"></view>
+        </view>
+        <!--图片-->
+        <view wx:for="{{imgSrc}}" wx:key="index" class="share-img">
+            <image src="{{item}}" />
+            <view class="iconfont icon-cross" bindtap="delImg" data-id="{{index}}"></view>
+        </view>
+        <view class="share-type"  wx:if="{{videoSrc===''}}">
             <text class="iconfont icon-shipin" bindtap="videoShow"></text>
         </view>
-        <view >
+        <view class="share-type">
             <text class="iconfont icon-tupian"  bindtap="gotoShow"></text>
         </view>
-        <view >
-            <text class="iconfont icon-maikefeng"></text>
+        <view class="share-type">
+            <text class="iconfont icon-maikefeng" bindtap="recorderShow"></text>
         </view>
     </view>
     <view class="dizhi clear" bindtap="locationShow">
