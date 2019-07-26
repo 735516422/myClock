@@ -10,6 +10,7 @@ Page({
     videoSrc:"",//视频  
     locationName:"",//地址
     timer:null,//定时器
+    rmStop:false,//暂停
     RM:null,//录音
     rmTimes:"00.00"
   },
@@ -111,23 +112,34 @@ Page({
         this.Countdown(that,secondes);
     })
   },
+  recorderStop:function(){
+    this.setData({
+      rmStop: !this.data.rmStop
+    });
+    this.data.RM.pause();
+  },
+  recorderCancel:function(){
+    this.data.RM.stop();
+    this.setData({
+      rmStop:false,
+      RM:null,
+      rmTimes:"00.00"
+    });
+  },
   // 倒计时
   Countdown:function (that,secondes) {
     let timer = setTimeout(function() {
     console.log("----secondes----" + that.formatSeconds(secondes));
-    secondes++;
-    if(secondes>=600){
-      that.data.RM.stop();
-      clearTimeout(timer);
-      that:setData({
-        timer:null
+    if (!that.data.rmStop){
+      secondes++;
+      if(secondes>=600){
+        that.data.RM.stop();
+      }
+      that.setData({
+        rmTimes: that.formatSeconds(secondes)
       });
     }
-    that.setData({
-      rmTimes: that.formatSeconds(secondes),
-      timer:timer
-    });
-    that.Countdown(that,secondes);
+      that.data.RM !== null && that.Countdown(that, secondes);
     }, 1000);
   },
   formatSeconds:function (value) {

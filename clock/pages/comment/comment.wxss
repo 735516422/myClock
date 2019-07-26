@@ -13,6 +13,46 @@
     max-height: 500rpx;
     font-size: 30rpx;
 }
+/*录音*/
+.comment>.audio{
+  width: 100%;
+  height: 100rpx;
+  border:2rpx solid #ddd;
+  border-radius: 20rpx; 
+  margin-bottom: 10rpx;
+  display: flex;
+  align-items: center;
+}
+.comment>.audio>.cross{
+  font-weight:bold;
+  padding: 0 20rpx;
+  color: #808080;
+  border-right:1rpx solid #ddd; 
+}
+.comment>.audio>.dot{
+  height: 10rpx;
+  width: 10rpx;
+  background: #808080;
+  border-radius: 50%;
+  margin-left: 20rpx;
+  margin-right: 10rpx;
+}
+.comment>.audio>.audio-time{
+  margin-right: auto;
+  font-size: 30rpx;
+  color: #e20b0f;
+}
+.comment>.audio>.stop{
+  color: #e20b0f;
+  font-size: 70rpx; 
+  margin-right: 30rpx;
+}
+.comment>.audio>.success{
+  color: #9e11c9;
+  font-size: 30rpx;
+  margin-right: 25rpx;
+}
+/*按钮*/
 .comment>.share{
     display: flex;
     flex-wrap: wrap;
@@ -26,6 +66,7 @@
     border-radius: 20rpx;
     margin-right: 10rpx;
 }
+
 /*图片视频*/
 .comment>.share>.share-img,
 .comment>.share>.share-video{
