@@ -1,18 +1,26 @@
 // pages/comment/comment.js
+const app=getApp();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    pid:0,//评论Id
+    postCount:0,//上传数 用来上传完成
     text:"",//评论内容
     imgSrc:[],//发布图片
     videoSrc:"",//视频  
     locationName:"",//地址
+    state:0,//0:所有人可见 1：自己可见
     timer:null,//定时器
     rmStop:false,//暂停
+    secondes:0,//时长
     RM:null,//录音
-    rmTimes:"00.00"
+    rmTimes:"00.00",//现在时长
+    duration:"00.00",//总时长
+    audio:null,//录音文件
+    audioPlay:null//录音实例化
   },
 
   /**
@@ -21,6 +29,23 @@ Page({
   onLoad: function (options) {
 
   },
+  //初始化
+  init:function(){
+    this.setData({
+      text:"",//评论内容
+      imgSrc:[],//发布图片
+      videoSrc:"",//视频  
+      locationName:"",//地址
+      timer:null,//定时器
+      rmStop:false,//暂停
+      RM:null,//录音
+      rmTimes:"00.00",//现在时长
+      duration:"00.00",//总时长
+      audio:null,//录音文件
+      audioPlay:null//录音实例化
+    });
+  },
+  //获取评论
   commentText:function(e){
      this.setData({
        text:e.detail.value
@@ -73,13 +98,12 @@ Page({
       maxDuration: 60,
       camera: 'back',
       success(res) {
-        console.log(res);
         let paths=res.tempFilePath;
         _this.setData({
           videoSrc:paths
         })
-        console.log(1,_this.data.videoSrc);
-        console.log(2,paths);
+        //console.log(1,_this.data.videoSrc);
+        //console.log(2,paths);
       }
     })
   },
@@ -88,7 +112,6 @@ Page({
     var _this = this
     wx.chooseLocation({
       success(res) {
-        console.log(res);
         _this.setData({
           locationName:res.name
         })
@@ -98,48 +121,285 @@ Page({
   //录音
   recorderShow:function(){
     this.setData({
-      RM:wx.getRecorderManager()
+      RM:wx.getRecorderManager(),
+      rmStop:false
     })
     let option = {
-      duration:10000,     //录音的时长，之前最大值好像只有1分钟，现在最长可以录音10分钟
+      duration:60000,     //录音的时长，之前最大值好像只有1分钟，现在最长可以录音10分钟
       format:'mp3',         //录音的格式，有aac和mp3两种   
     }
-    let secondes=0;
+    this.setData({
+      secondes:0
+    });
     let that=this;
     this.data.RM.start(option);//开始录音   这么写的话，之后录音得到的数据，就是你上面写得数据。
     this.data.RM.onStart(()=>{
-        console.log('录音开始事件');    //这个方法是录音开始事件，你可以写录音开始的时候图片或者页面的变化
-        this.Countdown(that,secondes);
+        this.Countdown(that);
     })
+    this.data.RM.onPause((res)=>{
+      //console.log(res);
+    });
   },
+  //录音暂停
   recorderStop:function(){
     this.setData({
       rmStop: !this.data.rmStop
     });
-    this.data.RM.pause();
+    this.data.rmStop===true?this.data.RM.pause():this.data.RM.resume();
   },
+  //录音取消
   recorderCancel:function(){
     this.data.RM.stop();
     this.setData({
-      rmStop:false,
+      rmStop:true,
       RM:null,
       rmTimes:"00.00"
     });
   },
-  // 倒计时
-  Countdown:function (that,secondes) {
-    let timer = setTimeout(function() {
-    console.log("----secondes----" + that.formatSeconds(secondes));
-    if (!that.data.rmStop){
-      secondes++;
-      if(secondes>=600){
-        that.data.RM.stop();
-      }
-      that.setData({
-        rmTimes: that.formatSeconds(secondes)
+  //录音完成
+  recorderSuccess:function(){
+    this.data.RM.stop();
+    this.data.RM.onStop((res)=>{
+      //console.log(res);
+      this.setData({
+        audio:res,
+        rmStop:true,
+        duration:this.formatSeconds(res.duration/1000.0),
+        rmTimes:"00.00",
+        RM:null,
+        secondes:0
       });
+    });
+  },
+  //音频播放
+  audioPlay:function(){
+    if(this.data.audioPlay===null){
+      let innerAudioContext = wx.createInnerAudioContext()
+      innerAudioContext.src = this.data.audio.tempFilePath;
+      innerAudioContext.play();
+      this.setData({
+        audioPlay:innerAudioContext,
+        rmStop:false
+      });
+      this.setData({
+        secondes:0
+      });
+      let that=this;
+      innerAudioContext.onPlay(() => {
+        this.Countdown(that);
+      })
+      innerAudioContext.onError((res) => {
+        //console.log(res.errMsg)
+        //console.log(res.errCode)
+      })
+      innerAudioContext.onEnded((res) => {
+        //console.log('播放结束!',res);
+        this.data.audioPlay.destroy();
+        this.setData({
+          rmStop:true,
+          rmTimes:"00.00",
+          audioPlay:null,
+          secondes:0
+        });
+      })
+    }else{
+      this.audioPause();
     }
-      that.data.RM !== null && that.Countdown(that, secondes);
+  },
+  //音频暂停
+  audioPause:function(){
+    this.setData({
+      rmStop: !this.data.rmStop
+    });
+    this.data.rmStop===true?this.data.audioPlay.pause():this.data.audioPlay.play();
+  },
+  //音频关闭
+  audioCross:function(){
+    if(this.data.audioPlay!==null)
+      this.data.audioPlay.destroy();
+    this.setData({
+      rmStop:true,
+      rmTimes:"00.00",
+      audioPlay:null,
+      secondes:0,
+      audio:null
+    });
+  },
+  //音频进度条拖动
+  changeSlide:function(e){
+    let value=e.detail.value;
+    this.setData({
+      secondes:value
+    });
+    this.data.audioPlay.seek(value);
+  },
+  //上传文件
+  upLoadFile:function(path,type){
+    wx.uploadFile({
+      url:app.globalData.serveUrl+"/upload",
+      filePath:path,
+      name:"singleFile",
+      header:{
+        "Content-Type":"multipart/form-data"
+      },
+      success:(res)=>{
+        let data=JSON.parse(res.data);
+        let path=data.path.substring(1);
+        switch(type){
+          case 0:{
+              this.addImg(path);
+          }
+          break;
+          case 1:{
+              this.addVideo(path);
+          }
+          break;
+          case 2:{
+              this.addAudio(path);
+          }
+          break;
+        }
+      }
+    });
+  },
+  //上传图片
+  loadImg:function(){
+    let imgPaths=this.data.imgSrc;
+    for(let path of imgPaths){
+      this.upLoadFile(path,0);
+    }
+    let  video=this.data.videoSrc;
+    if(video!==""){
+      this.upLoadFile(video,1)
+    }
+    if(this.data.audio!==null){
+      let audioSrc=this.data.audio.tempFilePath;
+      this.upLoadFile(audioSrc,2)
+    }
+  },
+  //添加图片,
+  addImg:function(path){
+    let pid=this.data.pid;
+    let cimgUrl=path;
+    wx.request({
+      url:app.globalData.serveUrl+"/addImg",
+      data:{pid,cimgUrl},
+      success:(res)=>{
+        this.setData({
+          postCount:this.data.postCount+1
+        });
+      }
+    });
+  },
+  //添加视频
+  addVideo:function(path){
+    let pid=this.data.pid;
+    let cvideoUrl=path;
+    wx.request({
+      url:app.globalData.serveUrl+"/addVideo",
+      data:{pid,cvideoUrl},
+      success:(res)=>{
+        this.setData({
+          postCount:this.data.postCount+1
+        });
+      }
+    });
+  },
+  //添加音频
+  addAudio:function(path){
+    let pid=this.data.pid;
+    let caudioUrl=path;
+    wx.request({
+      url:app.globalData.serveUrl+"/addAudio",
+      data:{pid,caudioUrl},
+      success:(res)=>{
+        this.setData({
+          postCount:this.data.postCount+1
+        });
+      }
+    });
+  },
+  //添加评论
+  addComment:function(){
+    let uid=wx.getStorageSync("logInfo").userInfo.data.uid;
+    let ptext=this.data.text;
+    let place=this.data.locationName;
+    let state=this.data.state;
+    let videoSrc=this.data.videoSrc;
+    let imgCount=this.data.imgSrc.length;
+    let audio=this.data.audio;
+    if(ptext===""&&imgCount===0&&videoSrc===""&&audio===null){
+      wx.showToast({
+        title:"内容不能为空",
+        icon: 'none'
+      });
+    }else{
+      let count=0;
+      let msg;
+      if(imgCount!==0)count+=imgCount;      
+      videoSrc!==""&&count++;
+      audio!==null&&count++;
+      this.setData({
+        postCount:0
+      });
+      wx.showLoading({
+        title:"发表日记中.."
+      });
+      wx.request({
+        url:app.globalData.serveUrl+"/addComment",
+        data:{uid,ptext,place,state},
+        success:(res)=>{
+          this.setData({
+            pid:res.data.pid
+          });
+          this.loadImg();
+          msg=res.data.msg;
+        }
+      });
+      let timer=setInterval(() => {
+        if(count===this.data.postCount)
+        {
+          clearInterval(timer);
+          setTimeout(function () {
+            wx.hideLoading()
+          }, 2000)
+          wx.showToast({
+            title:msg,
+            icon: 'none'
+          });
+          this.init();
+          wx.switchTab({
+            url:'/pages/index/index'
+          });
+        }
+      }, 1000);
+    }
+  },
+  // 倒计时
+  Countdown:function (that) {
+    setTimeout(function() {
+      let secondes=that.data.secondes;
+      //console.log("----secondes----" + that.formatSeconds(secondes));
+      if (!that.data.rmStop){
+        secondes++;
+        that.setData({
+          secondes:secondes
+        });
+        if(that.data.audio!==null){
+          //console.log(that.data.audio.duration/1000);
+          if(secondes>=parseInt(that.data.audio.duration/1000)){
+            //that.audioStop();
+          }
+        }else{
+          if(secondes>=600){
+            that.recorderSuccess();
+          }  
+        }
+        that.setData({
+          rmTimes: that.formatSeconds(secondes)
+        });
+        that.Countdown(that, secondes);
+      };
     }, 1000);
   },
   formatSeconds:function (value) {

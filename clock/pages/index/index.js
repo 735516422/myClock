@@ -24,15 +24,15 @@ Page({
     }
   },
   findInfo:function(){
-    if(wx.getStorageSync("logInfo").code==1)
+    //console.log(wx.getStorageSync("logInfo"));
+    if(wx.getStorageSync("logInfo").code!==1)
     {
-      console.log(wx.getStorageSync("logInfo"));
       wx.request({
       url:this.data.serveUrl+"/userList",
       data:{openId:wx.getStorageSync("user").openid},
       success:(res)=>{
           if(res.data.code==-1){
-              this.postInfo();
+             this.postInfo();
           }else{
             var obj={};
             obj.userInfo=res.data;
@@ -45,6 +45,11 @@ Page({
           }
         }
      });
+    }else{
+      //卸载动画
+      setTimeout(function(){
+        wx.hideLoading();
+      },500);
     }
   },
   postInfo:function(){
@@ -59,16 +64,9 @@ Page({
       data:{openId:warp[0],pname:warp[1],purl:warp[2],age:warp[3],uadress:warp[4]},
       method:"POST",
       success:(res)=>{
-          if(res.data.code==1){
-            var obj={};
-            obj.userInfo=res.data;
-            obj.code=1;
-            wx.setStorageSync("logInfo",obj);
-            //卸载动画
-          setTimeout(function(){
-            wx.hideLoading();
-          },500);
-          }
+        if(res.data.code==1){
+          this.findInfo();
+        }
       }
     });
   },
@@ -113,5 +111,6 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
+    this.getCompont();
   }
 })

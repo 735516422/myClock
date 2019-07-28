@@ -1,15 +1,15 @@
 <!--compents/comList/index.wxml-->
-<view class="commentList">
+<view class="commentList" wx:for="{{plList}}" wx:key="plIndex" wx:for-item="plInfo" wx:for-index="plIndex">
     <image src="{{userInfo.avatarUrl}}" class="userinfo-avatar"></image>
     <view class="comment-container">
         <view class="container-top">
-            <text class="userinfo-name">{{userInfo.nickName}}</text>
-            <text class="comment-time">{{time}}</text>
+            <text class="userinfo-name">{{plInfo.pname}}</text>
+            <text class="comment-time">{{plInfo.ptime}}</text>
         </view>
         <view class="container-middle">
-            <text >今天天气不错适合出行游玩</text>
+            <text >{{plInfo.ptext}}</text>
             <view >
-                <image src="{{img}}" wx:for="{{imgList}}" wx:key="imgIndex" wx:for-item="img" wx:for-index="imgIndex"/>       
+                <image src="{{img.cimgUrl}}" wx:for="{{imgList}}" wx:key="imgIndex" wx:for-item="img" wx:for-index="imgIndex"/> 
             </view>
         </view>
         <view class="container-footer">

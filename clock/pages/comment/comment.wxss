@@ -13,8 +13,8 @@
     max-height: 500rpx;
     font-size: 30rpx;
 }
-/*录音*/
-.comment>.audio{
+.comment>.audio,
+.comment>.audioBf{
   width: 100%;
   height: 100rpx;
   border:2rpx solid #ddd;
@@ -23,6 +23,33 @@
   display: flex;
   align-items: center;
 }
+/*录音播放*/
+.comment>.audioBf{
+    background:#AEBBC4;
+    position: relative;
+}
+.comment>.audioBf>.play{
+    font-size: 60rpx;
+    margin: 0 30rpx ;
+    color: #fff;
+}
+.comment>.audioBf>.audio-time{
+    font-size: 30rpx;
+    color: #fff;
+}
+.comment>.audioBf>.slider_middle{
+    width:220rpx;
+}
+.comment>.audioBf>.cross{
+    position: absolute;
+    top:0;
+    right: 0;
+    background: #FB4E43;
+    border-radius: 50%;
+    color: #fff;
+}
+/*录音*/
+
 .comment>.audio>.cross{
   font-weight:bold;
   padding: 0 20rpx;
@@ -140,6 +167,7 @@
     height: 80rpx;
     border-radius: 10rpx;
     text-align: center;
+    line-height: 80rpx;
 }
 /*图标*/
 .icon-diqiu:before {
