@@ -2,13 +2,7 @@
 <view class="comment">
     <textarea placeholder-class="phcolor" class="comment-text" bindinput="commentText" auto-height="true" placeholder="说说今天发生的事情和收获..." value="{{text}}"></textarea>
     <!--录音播放组件 -->
-    <view class="audioBf" wx:if="{{audio!==null}}">
-        <text class="{{rmStop?'iconfont icon-bofang play':'iconfont icon-zanting play'}}" catchtap="audioPlay"></text>
-        <text class="audio-time">{{rmTimes}}</text>
-        <slider class="slider_middle" backgroundColor="#C7D0D5" activeColor="#fff" bindchange="changeSlide" max="{{audio.duration/1000}}" min="0" value="{{secondes}}"  block-size  ="12" ></slider>
-        <text class="audio-time">{{duration}}</text>
-        <view class="iconfont icon-cross cross" bindtap="audioCross"></view>
-    </view>
+    <myAudio audioFile="{{audioFile}}" bindaudioCross="onaudioCross"></myAudio>
     <!--录音组件-->
     <view class="audio" wx:if="{{RM!==null}}">
         <text class="iconfont icon-cross cross" catchtap="recorderCancel"></text>
@@ -34,7 +28,7 @@
         <view class="share-type">
             <text class="iconfont icon-tupian"  bindtap="gotoShow"></text>
         </view>
-        <view class="share-type" wx:if="{{RM===null&&audio===null}}">
+        <view class="share-type" wx:if="{{RM===null&&audioFile===null}}">
             <text class="iconfont icon-maikefeng" bindtap="recorderShow"></text>
         </view>
     </view>

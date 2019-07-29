@@ -7,7 +7,7 @@ CREATE TABLE userList(
     uid INT PRIMARY KEY AUTO_INCREMENT,
     openId VARCHAR(128),
     pname VARCHAR(32),
-    purl VARCHAR(64),
+    purl VARCHAR(256),
     age INT,
     uadress VARCHAR(128)
 );
@@ -15,7 +15,7 @@ CREATE TABLE userList(
 CREATE TABLE plList(
     pid INT PRIMARY KEY AUTO_INCREMENT,
     uid INT,
-    ptime INT,
+    ptime BIGINT,
     ptext VARCHAR(1024),
     place VARCHAR(64),
     state INT,
@@ -47,7 +47,7 @@ CREATE TABLE fabList(
     fid INT PRIMARY KEY AUTO_INCREMENT,
     pid INT,
     uid INT,
-    ftime INT,
+    ftime BIGINT,
     FOREIGN KEY(pid) REFERENCES plList(pid),
     FOREIGN KEY(uid) REFERENCES userList(uid)
 );
@@ -56,7 +56,7 @@ CREATE TABLE replyList(
     rid INT PRIMARY KEY AUTO_INCREMENT,
     pid INT,
     uid INT,
-    rtime INT,
+    rtime BIGINT,
     ptext VARCHAR(1024),
     pimgUrl VARCHAR(256),
     pvideoUrl VARCHAR(64),

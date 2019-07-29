@@ -43,8 +43,9 @@
     display: flex;
 }
 .commentList>.comment-container>.container-middle>view>image{
-    width: 100rpx;
-    height: 100rpx;
+    margin-top:20rpx;
+    width: 150rpx;
+    height: 150rpx;
 }
 /*评论下部分*/
 .commentList>.comment-container>.container-footer{

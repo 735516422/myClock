@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "myAudio":"/compents/audio/index"
+  },
   "navigationBarTitleText": "发表"
 }

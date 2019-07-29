@@ -82,8 +82,9 @@ app.post("/upload",singleMidle,(req,res)=>{
     //9.5:将临时文件修改名称移动 新文件名
     //修改名称并且移动文件 (原先文件,目标新文件名)
     fs.renameSync(req.file.path,des);
+    var desPath="./upload/"+ftime+fran+suff;
     //10:将临时文件移动upload目录下  15:58
-    res.send({code:1,msg:"上传文件成功",path:des});
+    res.send({code:1,msg:"上传文件成功",path:desPath});
 });
 
 //添加图片
@@ -136,12 +137,13 @@ app.get("/addComment",(req,res)=>{
     let place=req.query.place;
     let state=req.query.state;
     let time=new Date().getTime();
+    console.log(time,new Date());
     let warp=[uid,time,ptext,place,state];
     let pid=0;
     let sql="INSERT INTO plList VALUES(null,?,?,?,?,?)";
     pool.query(sql,warp,(err,result)=>{
         if(err)throw err;
-        //console.log(result);
+        console.log(result);
         if(result.affectedRows>0)
             res.send({code:1,msg:"发布成功",pid:result.insertId});
         else{
@@ -151,7 +153,6 @@ app.get("/addComment",(req,res)=>{
 });
 //评论列表
 app.get("/plList",(req,res)=>{
-
     let sql="SELECT p.pid,p.ptime,p.ptext,p.place,p.state,v.cvideoUrl,a.caudioUrl,u.pname,u.purl FROM plList p LEFT JOIN  clockVideo v ON p.pid=v.pid  LEFT JOIN clockAudio a ON p.pid=a.pid LEFT JOIN userList u ON p.uid=u.uid";
     pool.query(sql,(err,result)=>{
         if(err)throw err;

@@ -1,5 +1,6 @@
 // pages/comment/comment.js
 const app=getApp();
+const util=require("../../utils/util");
 Page({
 
   /**
@@ -19,7 +20,7 @@ Page({
     RM:null,//录音
     rmTimes:"00.00",//现在时长
     duration:"00.00",//总时长
-    audio:null,//录音文件
+    audioFile:null,//录音文件
     audioPlay:null//录音实例化
   },
 
@@ -41,7 +42,7 @@ Page({
       RM:null,//录音
       rmTimes:"00.00",//现在时长
       duration:"00.00",//总时长
-      audio:null,//录音文件
+      audioFile:null,//录音文件
       audioPlay:null//录音实例化
     });
   },
@@ -134,7 +135,7 @@ Page({
     let that=this;
     this.data.RM.start(option);//开始录音   这么写的话，之后录音得到的数据，就是你上面写得数据。
     this.data.RM.onStart(()=>{
-        this.Countdown(that);
+      util.Countdown(that);
     })
     this.data.RM.onPause((res)=>{
       //console.log(res);
@@ -162,76 +163,21 @@ Page({
     this.data.RM.onStop((res)=>{
       //console.log(res);
       this.setData({
-        audio:res,
+        audioFile:res,
         rmStop:true,
-        duration:this.formatSeconds(res.duration/1000.0),
+        duration:util.formatSeconds(res.duration/1000.0),
         rmTimes:"00.00",
         RM:null,
         secondes:0
       });
     });
   },
-  //音频播放
-  audioPlay:function(){
-    if(this.data.audioPlay===null){
-      let innerAudioContext = wx.createInnerAudioContext()
-      innerAudioContext.src = this.data.audio.tempFilePath;
-      innerAudioContext.play();
-      this.setData({
-        audioPlay:innerAudioContext,
-        rmStop:false
-      });
-      this.setData({
-        secondes:0
-      });
-      let that=this;
-      innerAudioContext.onPlay(() => {
-        this.Countdown(that);
-      })
-      innerAudioContext.onError((res) => {
-        //console.log(res.errMsg)
-        //console.log(res.errCode)
-      })
-      innerAudioContext.onEnded((res) => {
-        //console.log('播放结束!',res);
-        this.data.audioPlay.destroy();
-        this.setData({
-          rmStop:true,
-          rmTimes:"00.00",
-          audioPlay:null,
-          secondes:0
-        });
-      })
-    }else{
-      this.audioPause();
-    }
-  },
-  //音频暂停
-  audioPause:function(){
+  //关闭音频事件
+  onaudioCross:function(e){
+      //通过事件接收
     this.setData({
-      rmStop: !this.data.rmStop
-    });
-    this.data.rmStop===true?this.data.audioPlay.pause():this.data.audioPlay.play();
-  },
-  //音频关闭
-  audioCross:function(){
-    if(this.data.audioPlay!==null)
-      this.data.audioPlay.destroy();
-    this.setData({
-      rmStop:true,
-      rmTimes:"00.00",
-      audioPlay:null,
-      secondes:0,
-      audio:null
-    });
-  },
-  //音频进度条拖动
-  changeSlide:function(e){
-    let value=e.detail.value;
-    this.setData({
-      secondes:value
-    });
-    this.data.audioPlay.seek(value);
+      audioFile: e.detail.audioFile
+    })
   },
   //上传文件
   upLoadFile:function(path,type){
@@ -272,8 +218,8 @@ Page({
     if(video!==""){
       this.upLoadFile(video,1)
     }
-    if(this.data.audio!==null){
-      let audioSrc=this.data.audio.tempFilePath;
+    if(this.data.audioFile!==null){
+      let audioSrc=this.data.audioFile.tempFilePath;
       this.upLoadFile(audioSrc,2)
     }
   },
@@ -327,8 +273,8 @@ Page({
     let state=this.data.state;
     let videoSrc=this.data.videoSrc;
     let imgCount=this.data.imgSrc.length;
-    let audio=this.data.audio;
-    if(ptext===""&&imgCount===0&&videoSrc===""&&audio===null){
+    let audioFile=this.data.audioFile;
+    if(ptext===""&&imgCount===0&&videoSrc===""&&audioFile===null){
       wx.showToast({
         title:"内容不能为空",
         icon: 'none'
@@ -338,7 +284,7 @@ Page({
       let msg;
       if(imgCount!==0)count+=imgCount;      
       videoSrc!==""&&count++;
-      audio!==null&&count++;
+      audioFile!==null&&count++;
       this.setData({
         postCount:0
       });
@@ -374,72 +320,6 @@ Page({
         }
       }, 1000);
     }
-  },
-  // 倒计时
-  Countdown:function (that) {
-    setTimeout(function() {
-      let secondes=that.data.secondes;
-      //console.log("----secondes----" + that.formatSeconds(secondes));
-      if (!that.data.rmStop){
-        secondes++;
-        that.setData({
-          secondes:secondes
-        });
-        if(that.data.audio!==null){
-          //console.log(that.data.audio.duration/1000);
-          if(secondes>=parseInt(that.data.audio.duration/1000)){
-            //that.audioStop();
-          }
-        }else{
-          if(secondes>=600){
-            that.recorderSuccess();
-          }  
-        }
-        that.setData({
-          rmTimes: that.formatSeconds(secondes)
-        });
-        that.Countdown(that, secondes);
-      };
-    }, 1000);
-  },
-  formatSeconds:function (value) {
-    var secondTime = parseInt(value); // 秒
-    var minuteTime = 0; // 分
-    var hourTime = 0; // 小时
-    if (secondTime > 60) { //如果秒数大于60，将秒数转换成整数
-      //获取分钟，除以60取整数，得到整数分钟
-      minuteTime = parseInt(secondTime / 60);
-      //获取秒数，秒数取佘，得到整数秒数
-      secondTime = parseInt(secondTime % 60);
-      //如果分钟大于60，将分钟转换成小时
-      if (minuteTime > 60) {
-        //获取小时，获取分钟除以60，得到整数小时
-        hourTime = parseInt(minuteTime / 60);
-        //获取小时后取佘的分，获取分钟除以60取佘的分
-        minuteTime = parseInt(minuteTime % 60);
-      }
-    }
-    var result;
-    //时间的展示方式为00:00
-    if(secondTime<10){
-        result = "0" + parseInt(secondTime);
-    }else{
-      result = "" + parseInt(secondTime);
-    }
-    if (minuteTime > 0) {
-      if (minuteTime<10){
-        result = "0" + parseInt(minuteTime) + ":" + result;
-      }else{
-        result = "" + parseInt(minuteTime) + ":" + result;
-      }
-    }else{
-        result = "00:" + result;
-    }
-    //由于限制时长最多为三分钟,小时用不到
-    if (hourTime > 0) {
-        result = "" + parseInt(hourTime) + ":" + result;
-    }
-    return result;
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

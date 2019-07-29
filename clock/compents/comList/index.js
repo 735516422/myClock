@@ -13,8 +13,6 @@ Component({
    * 组件的初始数据
    */
   data: {
-    userInfo: {},
-    time: "",
     plList:[],//评论列表
     imgList:[]
   },
@@ -22,27 +20,17 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    /*获取用户信息*/
-    isUserInfo: function (userInfo) {
-      this.setData({
-        userInfo:userInfo
-      })
-    },
-    isTime:function(DATE){
-      this.setData({
-        time:DATE
-      });
-    },
+   /*获取评论*/
     getPlList:function(){
       wx.request({
         url:app.globalData.serveUrl+"/plList",
         success:(res)=>{
             let lists=res.data.data;
             for(let li of lists){
-                li.ptime=utils.getTimeUntilNow(li.ptime);
-                this.getImg(li);
+              li.ptime=utils.getTimeUntilNow(new Date().getTime()-li.ptime);
+              this.getImg(li);
             }
-           this.setData({
+            this.setData({
               plList:lists
             });     
         }
@@ -55,17 +43,27 @@ Component({
         data:{pid},
         success:(res)=>{
             let list=this.data.imgList;
+            let imgs=[];
             for(let m of res.data.data){
-                m.cimgUrl=app.globalData.serveUrl+m.cimgUrl;
+              imgs.push(app.globalData.serveUrl+m.cimgUrl);
             }
-            list.push(res.data.data);
+            list.push(imgs);
             this.setData({
-              imgList:res.data.data
+              imgList:list
             });
-            console.log(res.data.data,this.data.imgList);
+            console.log(this.data.imgList,imgs);
         }
       });
-    }
+    },
+    /*图片全屏*/
+    imgFull:function(e){
+      let url=e.target.dataset.imgUrl;
+      let pid=e.target.dataset.id;
+      wx.previewImage({
+        current: url, // 当前显示图片的http链接
+        urls: this.data.imgList[pid] // 需要预览的图片http链接列表
+      })
+    }      
   },
   attached:function(){
        this.getPlList(this);

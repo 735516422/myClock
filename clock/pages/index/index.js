@@ -15,11 +15,6 @@ Page({
       wx.showLoading({
         title:"正在努力加载数据..."
       });
-      this.myComlist=this.selectComponent("#myComlist");
-      this.myComlist.isUserInfo(this.data.userInfo);
-      let i=new Date().getTime()-new Date("2019/7/20").getTime();
-      let DATE = util.getTimeUntilNow(i);
-      this.myComlist.isTime(DATE);
       this.findInfo();
     }
   },
