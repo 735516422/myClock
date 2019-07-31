@@ -11,9 +11,6 @@ CREATE TABLE userList(
     age INT,
     uadress VARCHAR(128)
 );
-INSERT INTO `userlist` (`uid`, `openId`, `pname`, `purl`, `age`, `uadress`) VALUES
-(1, 'oWIim5FvsyyOukAcpxsoOYGuzPac', '土肥圆', 'https://wx.qlogo.cn/mmopen/vi_32/4zyIHHMzURfThdBhzWWxibHicW4NxbODhmgsFhEt2NYmJj0TCsAVfuCiamckMHylspBm1Lp7OxcVlWibYqzQ2JKf6w/132', 1, 'Hunan');
-
 #评论列表
 CREATE TABLE plList(
     pid INT PRIMARY KEY AUTO_INCREMENT,
@@ -24,8 +21,6 @@ CREATE TABLE plList(
     state INT,
     FOREIGN KEY(uid) REFERENCES userList(uid)
 );
-INSERT INTO `pllist` (`pid`, `uid`, `ptime`, `ptext`, `place`, `state`) VALUES
-(1, 1, 1564542094301, '今天天气不错', '', 0);
 #图片
 CREATE TABLE clockImg(
     cid INT PRIMARY KEY AUTO_INCREMENT,
@@ -33,9 +28,6 @@ CREATE TABLE clockImg(
     cimgUrl VARCHAR(64),
     FOREIGN KEY(pid) REFERENCES plList(pid)
 );
-INSERT INTO `clockimg` (`cid`, `pid`, `cimgUrl`) VALUES
-(1, 1, '/upload/15645420943996054.png'),
-(2, 1, '/upload/15645420944482615.png');
 #视频
 CREATE TABLE clockVideo(
     cid INT PRIMARY KEY AUTO_INCREMENT,

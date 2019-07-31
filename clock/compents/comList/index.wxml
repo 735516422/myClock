@@ -1,6 +1,8 @@
 <!--compents/comList/index.wxml-->
 <view class="commentList" wx:for="{{plList}}" wx:key="plIndex" wx:for-item="plInfo" wx:for-index="plIndex">
-    <image src="{{plInfo.purl}}" class="userinfo-avatar"></image>
+    <view class="comment-top">
+      <image src="{{plInfo.purl}}" class="userinfo-avatar"></image>
+    </view>
     <view class="comment-container">
         <view class="container-top">
             <text class="userinfo-name">{{plInfo.pname}}</text>
@@ -11,7 +13,7 @@
             <view >
                 <image src="{{img}}" wx:for="{{imgList[plIndex]}}" wx:key="imgIndex" wx:for-item="img" wx:for-index="imgIndex" data-imgUrl="{{img.cimgUrl}}" data-id="{{plIndex}}" bindtap="imgFull"/> 
             </view>
-            <myAudio audioFile="{{plInfo.caudioUrl}}" crossEnable="{{false}}"></myAudio>
+            <myAudio audioFile="{{plInfo.caudioUrl}}" audioTime="{{plInfo.duration}}" crossEnable="{{false}}"></myAudio>
         </view>
         <view class="container-footer">
             <view >

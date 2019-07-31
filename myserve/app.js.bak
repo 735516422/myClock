@@ -172,7 +172,7 @@ app.get("/plList",(req,res)=>{
 //评论图片
 app.get("/findImg",(req,res)=>{
     let pid=req.query.pid;
-    let sql="SELECT cid,cimgUrl FROM clockImg WHERE pid=? ORDER BY pid";
+    let sql="SELECT cid,cimgUrl FROM clockImg WHERE pid=? ORDER BY cid";
     pool.query(sql,[pid],(err,result)=>{
         if(err)throw err;
         console.log(result,pid);

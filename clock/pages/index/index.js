@@ -100,6 +100,10 @@ Page({
     })
     this.getCompont();  
   },
+  onShow:function(){
+    let myComlist = this.selectComponent("#myComlist");
+    myComlist!==null&&myComlist.getPlList();
+  },
   getUserInfo: function (e) {
     app.globalData.userInfo = e.detail.userInfo
     this.setData({

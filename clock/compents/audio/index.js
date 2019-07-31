@@ -6,14 +6,15 @@ Component({
    */
   properties: {
     audioFile:{//录音文件
-      type:"Object",
-      value:null,
-      observer:function(newVal, oldVal){
-        console.log(1,newVal);
-        if(newVal===null)
-          return;
+      type:"",
+      value:""
+    },
+    audioTime: {//录音文件
+      type: "",
+      value: 0,
+      observer: function (newVal, oldVal) {
         this.setData({
-          duration:util.formatSeconds(newVal.duration/1000.0),
+          duration: util.formatSeconds(Math.ceil(newVal))
         });
       }
     },
@@ -43,7 +44,7 @@ Component({
       console.log(this.data.audioPlay);
       if(this.data.audioPlay===null){
         let innerAudioContext = wx.createInnerAudioContext()
-        innerAudioContext.src = this.data.audioFile.tempFilePath;
+        innerAudioContext.src = this.data.audioFile;
         innerAudioContext.play();
         this.setData({
           audioPlay:innerAudioContext,

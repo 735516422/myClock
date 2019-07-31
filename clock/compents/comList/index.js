@@ -20,8 +20,15 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    init:function(){
+      this.setData({
+        plList: [],
+        imgList: []
+      })
+    },
    /*获取评论*/
     getPlList:function(){
+      this.init();
       wx.request({
         url:app.globalData.serveUrl+"/plList",
         success:(res)=>{
@@ -32,7 +39,10 @@ Component({
             }
             this.setData({
               plList:lists
-            });     
+            });   
+			console.log(1,this.data.plList);
+			console.log(2,this.data.plList[0]);
+      console.log(4,this.data.plList[0].imgUrl);
         }
       });
     },
@@ -47,11 +57,12 @@ Component({
             for(let m of res.data.data){
               imgs.push(app.globalData.serveUrl+m.cimgUrl);
             }
+          li.imgUrl=imgs.slice(0);
             list.push(imgs);
             this.setData({
               imgList:list
             });
-            console.log(this.data.imgList,imgs);
+          console.log(pid, imgs);
         }
       });
     },
@@ -66,6 +77,6 @@ Component({
     }      
   },
   attached:function(){
-       this.getPlList(this);
+       this.getPlList();
   }
 })

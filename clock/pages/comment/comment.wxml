@@ -2,7 +2,7 @@
 <view class="comment">
     <textarea placeholder-class="phcolor" class="comment-text" bindinput="commentText" auto-height="true" placeholder="说说今天发生的事情和收获..." value="{{text}}"></textarea>
     <!--录音播放组件 -->
-    <myAudio audioFile="{{audioFile}}" bindaudioCross="onaudioCross"></myAudio>
+    <myAudio audioFile="{{audioFile}}" audioTime="{{audio.duration/1000.0}}" bindaudioCross="onaudioCross"></myAudio>
     <!--录音组件-->
     <view class="audio" wx:if="{{RM!==null}}">
         <text class="iconfont icon-cross cross" catchtap="recorderCancel"></text>
@@ -28,7 +28,7 @@
         <view class="share-type">
             <text class="iconfont icon-tupian"  bindtap="gotoShow"></text>
         </view>
-        <view class="share-type" wx:if="{{RM===null&&audioFile===null}}">
+        <view class="share-type" wx:if="{{RM===null&&audio===null}}">
             <text class="iconfont icon-maikefeng" bindtap="recorderShow"></text>
         </view>
     </view>

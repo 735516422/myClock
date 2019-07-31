@@ -8,10 +8,13 @@
     border-bottom:1rpx solid #ddd;
     align-items: top;
 }
+.comment-top{
+  width: 15%;
+}
 /*评论用户头像*/
 .userinfo-avatar {
-  width: 88rpx;
-  height: 88rpx;
+  width: 70rpx;
+  height:70rpx;
   margin: 20rpx;
   border-radius: 50%;
 }
@@ -20,6 +23,7 @@
 .commentList>.comment-container>.container-top{
     display: flex;
     flex-direction: column;
+    width: 85%;
 }
 .commentList>.comment-container>.container-top{
     margin-top:20rpx;

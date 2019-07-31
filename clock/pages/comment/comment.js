@@ -20,7 +20,8 @@ Page({
     RM:null,//录音
     rmTimes:"00.00",//现在时长
     duration:"00.00",//总时长
-    audioFile:null,//录音文件
+    audio:null,//录音文件
+    audioFile: "",
     audioPlay:null//录音实例化
   },
 
@@ -42,7 +43,8 @@ Page({
       RM:null,//录音
       rmTimes:"00.00",//现在时长
       duration:"00.00",//总时长
-      audioFile:null,//录音文件
+      audio:null,//录音文件
+      audioFile:"",
       audioPlay:null//录音实例化
     });
   },
@@ -163,9 +165,10 @@ Page({
     this.data.RM.onStop((res)=>{
       //console.log(res);
       this.setData({
-        audioFile:res,
+        audio:res,
+        audioFile:res.tempFilePath,
         rmStop:true,
-        duration:util.formatSeconds(res.duration/1000.0),
+        duration:util.formatSeconds(Math.ceil(res.duration/1000.0)),
         rmTimes:"00.00",
         RM:null,
         secondes:0
@@ -176,7 +179,8 @@ Page({
   onaudioCross:function(e){
       //通过事件接收
     this.setData({
-      audioFile: e.detail.audioFile
+      audio: null,
+      audioFile:""
     })
   },
   //上传文件
@@ -218,8 +222,8 @@ Page({
     if(video!==""){
       this.upLoadFile(video,1)
     }
-    if(this.data.audioFile!==null){
-      let audioSrc=this.data.audioFile.tempFilePath;
+    if(this.data.audio!==null){
+      let audioSrc=this.data.audio.tempFilePath;
       this.upLoadFile(audioSrc,2)
     }
   },
@@ -255,9 +259,10 @@ Page({
   addAudio:function(path){
     let pid=this.data.pid;
     let caudioUrl=path;
+    let duration = this.data.audio.duration/1000.0;
     wx.request({
       url:app.globalData.serveUrl+"/addAudio",
-      data:{pid,caudioUrl},
+      data: { pid, caudioUrl, duration},
       success:(res)=>{
         this.setData({
           postCount:this.data.postCount+1
@@ -273,8 +278,8 @@ Page({
     let state=this.data.state;
     let videoSrc=this.data.videoSrc;
     let imgCount=this.data.imgSrc.length;
-    let audioFile=this.data.audioFile;
-    if(ptext===""&&imgCount===0&&videoSrc===""&&audioFile===null){
+    let audio=this.data.audio;
+    if(ptext===""&&imgCount===0&&videoSrc===""&&audio===null){
       wx.showToast({
         title:"内容不能为空",
         icon: 'none'
@@ -284,7 +289,7 @@ Page({
       let msg;
       if(imgCount!==0)count+=imgCount;      
       videoSrc!==""&&count++;
-      audioFile!==null&&count++;
+      audio!==null&&count++;
       this.setData({
         postCount:0
       });

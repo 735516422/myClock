@@ -1,8 +1,8 @@
 <!--compents/audio/index.wxml-->
-<view class="audioBf" wx:if="{{audioFile!==null}}">
+<view class="audioBf" wx:if="{{!(audioFile===null||audioFile==='')}}">
         <text class="{{rmStop?'iconfont icon-bofang play':'iconfont icon-zanting play'}}" catchtap="audioPlay"></text>
         <text class="audio-time">{{rmTimes}}</text>
-        <slider class="slider_middle" backgroundColor="#C7D0D5" activeColor="#fff" bindchange="changeSlide" max="{{audioFile.duration/1000}}" min="0" value="{{secondes}}"  block-size  ="12" ></slider>
+        <slider class="slider_middle" backgroundColor="#C7D0D5" activeColor="#fff" bindchange="changeSlide" max="{{audioTime}}" min="0" value="{{secondes}}"  block-size  ="12" ></slider>
         <text class="audio-time">{{duration}}</text>
         <view class="iconfont icon-cross cross" bindtap="audioCross" wx:if="{{crossEnable}}"></view>
 </view>

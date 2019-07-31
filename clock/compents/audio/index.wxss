@@ -21,7 +21,7 @@
     color: #fff;
 }
 .audioBf>.slider_middle{
-    width:220rpx;
+    width:35%;
 }
 .audioBf>.cross{
     position: absolute;
