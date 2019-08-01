@@ -162,8 +162,16 @@ app.get("/imgselect",(req,res)=>{
 });
 //评论列表
 app.get("/plList",(req,res)=>{
-    let sql="SELECT p.pid,p.ptime,p.ptext,p.place,p.state,v.cvideoUrl,a.caudioUrl,a.duration,u.pname,u.purl FROM plList p LEFT JOIN  clockVideo v ON p.pid=v.pid  LEFT JOIN clockAudio a ON p.pid=a.pid LEFT JOIN userList u ON p.uid=u.uid ORDER BY p.pid";
-    pool.query(sql,(err,result)=>{
+    //1:参数 pno pageSize
+    var pno = req.query.pno;
+    var pageSize = req.query.pageSize;
+    //2:允许使用默认值  1 7  15:15
+    if(!pno){pno=1}
+    if(!pageSize){pageSize=4}
+    let sql="SELECT p.pid,p.ptime,p.ptext,p.place,p.state,v.cvideoUrl,a.caudioUrl,a.duration,u.pname,u.purl FROM plList p LEFT JOIN  clockVideo v ON p.pid=v.pid  LEFT JOIN clockAudio a ON p.pid=a.pid LEFT JOIN userList u ON p.uid=u.uid ORDER BY p.pid LIMIT ?,?";
+    var offset = (pno-1)*pageSize;
+    pageSize = parseInt(pageSize);
+    pool.query(sql,[offset,pageSize],(err,result)=>{
         if(err)throw err;
         //console.log(result);
         res.send({code:1,msg:"查询成功",data:result});
@@ -175,7 +183,7 @@ app.get("/findImg",(req,res)=>{
     let sql="SELECT cid,cimgUrl FROM clockImg WHERE pid=? ORDER BY pid";
     pool.query(sql,[pid],(err,result)=>{
         if(err)throw err;
-        console.log(result,pid);
+        //console.log(result,pid);
         res.send({code:1,msg:"查询成功",data:result});
     });
 });
@@ -197,5 +205,18 @@ app.get("/findAudio",(req,res)=>{
         if(err)throw err;
         //console.log(result);
         res.send({code:1,msg:"查询成功",data:result});
+    });
+});
+//获赞列表
+app.get("/fabList",(req,res)=>{
+    let pid=req.query.pid;
+    let uid=req.query.uid;
+    let sql="SELECT fid FROM fabList WHERE pid=? AND uid=?";
+    pool.query(sql,[pid,uid],(err,result)=>{
+        if(err)throw err;
+        if(result.length>0)
+            res.send({code:1,msg:"查询成功"});
+        else
+            res.send({code:-1,msg:"查询失败"});
     });
 });
