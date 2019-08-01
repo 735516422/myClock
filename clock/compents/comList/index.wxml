@@ -5,8 +5,11 @@
     </view>
     <view class="comment-container">
         <view class="container-top">
-            <text class="userinfo-name">{{plInfo.pname}}</text>
-            <text class="comment-time">{{plInfo.ptime}}</text>
+            <view class="clear">
+                <text class="userinfo-name lf">{{plInfo.pname}}</text>
+                <text class="iconfont icon-shenglvehao del rt"></text>
+            </view>
+             <text class="comment-time">{{plInfo.ptime}}</text>
         </view>
         <view class="container-middle">
             <text >{{plInfo.ptext}}</text>

@@ -5,7 +5,7 @@
     display: flex;
     position: relative;
     padding: 20rpx;
-    border-bottom:1rpx solid #ddd;
+    border-bottom:20rpx solid #cccccc;
     align-items: top;
 }
 .comment-top{
@@ -27,11 +27,18 @@
 }
 .commentList>.comment-container>.container-top{
     margin-top:20rpx;
+    width: 100%;
+}
+.commentList>.comment-container>.container-top>view{
+    width: 100%;
 }
 /*评论上部分*/
-.commentList>.comment-container>.container-top>.userinfo-name{
+.commentList>.comment-container>.container-top .userinfo-name{
     font-size:28rpx; 
     color: #7D8DAE;
+}
+.commentList>.comment-container>.container-top .del{
+    color: #cccccc;
 }
 .commentList>.comment-container>.container-top>.comment-time{
     font-size:24rpx; 
@@ -45,6 +52,7 @@
 }
 .commentList>.comment-container>.container-middle>view{
     display: flex;
+    padding-bottom: 20rpx;
 }
 .commentList>.comment-container>.container-middle>view>image{
     margin-top:20rpx;
@@ -77,4 +85,7 @@ content: "\e62d";
 
 .icon-aixin:before {
 content: "\e872";
+}
+.icon-shenglvehao:before {
+content: "\e708";
 }

@@ -84,7 +84,6 @@ Component({
     },
     //音频关闭
     audioCross:function(){
-      console.log("a");
       if(this.data.audioPlay!==null)
         this.data.audioPlay.destroy();
       this.setData({

@@ -102,8 +102,26 @@ Page({
   },
   onShow:function(){
     let myComlist = this.selectComponent("#myComlist");
-    myComlist!==null&&myComlist.getPlList();
+    myComlist!==null&&myComlist.getRef();
   },
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+    let myComlist = this.selectComponent("#myComlist");
+    if(myComlist===null) return;   
+    //2:下拉操作显示第一页数据
+    myComlist.loadPullMore();
+ },
+
+ /**
+  * 页面上拉触底事件的处理函数
+  */
+ onReachBottom: function () {
+    let myComlist = this.selectComponent("#myComlist");
+    if(myComlist===null) return;   
+    myComlist.loadMore();
+ },
   getUserInfo: function (e) {
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
