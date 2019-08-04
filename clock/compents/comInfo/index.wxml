@@ -1,0 +1,15 @@
+<!--compents/comInfo/index.wxml-->
+<view class="container-top">
+    <view class="clear">
+        <text class="userinfo-name lf">{{plInfo.pname}}</text>
+        <text class="iconfont icon-shenglvehao del rt"></text>
+    </view>
+    <text class="comment-time">{{plInfo.ptime}}</text>
+</view>
+<view class="container-middle">
+    <text >{{plInfo.ptext}}</text>
+    <view >
+        <image src="{{img}}" wx:for="{{imgList[plIndex]}}" wx:key="imgIndex" wx:for-item="img" wx:for-index="imgIndex" data-imgUrl="{{img.cimgUrl}}" data-id="{{plIndex}}" bindtap="imgFull"/> 
+    </view>
+    <myAudio audioFile="{{plInfo.caudioUrl}}" audioTime="{{plInfo.duration}}" crossEnable="{{false}}"></myAudio>
+</view>

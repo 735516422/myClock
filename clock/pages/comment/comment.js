@@ -320,7 +320,12 @@ Page({
           });
           this.init();
           wx.switchTab({
-            url:'/pages/index/index'
+            url:'/pages/index/index',
+            success:function(e){
+              let page=getCurrentPages().pop();
+              if(page==undefined||page==null)return;
+              page.tabRouter();
+            }
           });
         }
       }, 1000);

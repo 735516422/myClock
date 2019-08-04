@@ -65,6 +65,12 @@ Page({
       }
     });
   },
+  tabRouter:function(){
+    let myComlist = this.selectComponent("#myComlist");
+    if(myComlist===null) return;   
+    console.log("跳转");
+    myComlist.getRef();
+  },
   onLoad: function () {
     if (app.globalData.userInfo) {
       this.setData({
@@ -99,10 +105,6 @@ Page({
       serveUrl:app.globalData.serveUrl
     })
     this.getCompont();  
-  },
-  onShow:function(){
-    let myComlist = this.selectComponent("#myComlist");
-    myComlist!==null&&myComlist.getRef();
   },
   /**
    * 页面相关事件处理函数--监听用户下拉动作

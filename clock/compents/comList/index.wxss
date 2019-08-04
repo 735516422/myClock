@@ -19,45 +19,10 @@
   border-radius: 50%;
 }
 /*评论*/
-.commentList>.comment-container,
-.commentList>.comment-container>.container-top{
+.commentList>.comment-container{
     display: flex;
     flex-direction: column;
     width: 85%;
-}
-.commentList>.comment-container>.container-top{
-    margin-top:20rpx;
-    width: 100%;
-}
-.commentList>.comment-container>.container-top>view{
-    width: 100%;
-}
-/*评论上部分*/
-.commentList>.comment-container>.container-top .userinfo-name{
-    font-size:28rpx; 
-    color: #7D8DAE;
-}
-.commentList>.comment-container>.container-top .del{
-    color: #cccccc;
-}
-.commentList>.comment-container>.container-top>.comment-time{
-    font-size:24rpx; 
-    color: #C1C1C1;
-}
-/*评论主体*/
-.commentList>.comment-container>.container-middle{
-    margin: 20rpx 0;
-    display: flex;
-    flex-direction: column;
-}
-.commentList>.comment-container>.container-middle>view{
-    display: flex;
-    padding-bottom: 20rpx;
-}
-.commentList>.comment-container>.container-middle>view>image{
-    margin-top:20rpx;
-    width: 150rpx;
-    height: 150rpx;
 }
 /*评论下部分*/
 .commentList>.comment-container>.container-footer{
@@ -66,6 +31,7 @@
 .commentList>.comment-container>.container-footer>view{
     margin-right: 60rpx;
 }
+
 .commentList>.comment-container>.container-footer>view>text:first-child{
     font-size: 40rpx;
     color: #ADADAD;
@@ -73,6 +39,20 @@
 .commentList>.comment-container>.container-footer>view>text:last-child{
     font-size: 26rpx;
     color: #ADADAD;
+}
+/*回复*/
+.commentList>.comment-container>.container-reply{
+   background: #F4F4F4;
+   width: 100%;
+   color: #8795B1;
+   font-size: 30rpx;
+   font-weight: bold;
+}
+.commentList>.comment-container>.container-reply>.replyTop{
+    padding: 15rpx;
+}
+.commentList .replyTop>.fabName{
+    margin-left: 15rpx;
 }
 /**字体图标**/
 .icon-pinglun:before {
@@ -86,6 +66,9 @@ content: "\e62d";
 .icon-aixin:before {
 content: "\e872";
 }
-.icon-shenglvehao:before {
-content: "\e708";
+
+.icon-aixin1:before {
+content: "\e85c";
+color: red;
 }
+

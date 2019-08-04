@@ -4,26 +4,13 @@
       <image src="{{plInfo.purl}}" class="userinfo-avatar"></image>
     </view>
     <view class="comment-container">
-        <view class="container-top">
-            <view class="clear">
-                <text class="userinfo-name lf">{{plInfo.pname}}</text>
-                <text class="iconfont icon-shenglvehao del rt"></text>
-            </view>
-             <text class="comment-time">{{plInfo.ptime}}</text>
-        </view>
-        <view class="container-middle">
-            <text >{{plInfo.ptext}}</text>
-            <view >
-                <image src="{{img}}" wx:for="{{imgList[plIndex]}}" wx:key="imgIndex" wx:for-item="img" wx:for-index="imgIndex" data-imgUrl="{{img.cimgUrl}}" data-id="{{plIndex}}" bindtap="imgFull"/> 
-            </view>
-            <myAudio audioFile="{{plInfo.caudioUrl}}" audioTime="{{plInfo.duration}}" crossEnable="{{false}}"></myAudio>
-        </view>
+        <myComInfo plInfo="{{plInfo}}" imgList="{{imgList[plIndex]}}"></myComInfo>
         <view class="container-footer">
-            <view >
-                <text class="iconfont icon-aixin "></text>
+            <view bindtap="setFab" data-pid="{{plInfo.pid}}" data-id="{{plIndex}}" >
+                <text class="{{fabList[plIndex]===1?'iconfont icon-aixin1':'iconfont icon-aixin'}}"></text>
                 <text >赞</text>
             </view>
-            <view >
+            <view data-pid="plInfo.pid" bindtap="getEnable">
                 <text class="iconfont icon-pinglun"></text>
                 <text >评论</text>
             </view>
@@ -32,5 +19,15 @@
                 <text >分享</text>
             </view>
         </view>
+        <view class="container-reply">
+            <view class="replyTop" wx:if="{{fabNameList[plIndex]!==''}}">
+               <text class="iconfont icon-aixin"></text>
+               <text class="fabName">{{fabNameList[plIndex]}}</text>     
+            </view>
+            <view class="replyMid">
+                <text ></text>
+            </view>
+        </view>
     </view>
 </view>
+<myReply myEnable="{{myReplyEnable}}"></myReply>

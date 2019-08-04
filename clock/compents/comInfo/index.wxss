@@ -1,0 +1,44 @@
+@import "../../app.wxss";
+.container-top{
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+}
+.container-top{
+    margin-top:20rpx;
+    width: 100%;
+}
+.container-top>view{
+    width: 100%;
+}
+/*评论上部分*/
+.container-top .userinfo-name{
+    font-size:28rpx; 
+    color: #7D8DAE;
+}
+.container-top .del{
+    color: #cccccc;
+}
+.container-top>.comment-time{
+    font-size:24rpx; 
+    color: #C1C1C1;
+}
+/*评论主体*/
+.container-middle{
+    margin: 20rpx 0;
+    display: flex;
+    flex-direction: column;
+}
+.container-middle>view{
+    display: flex;
+    padding-bottom: 20rpx;
+}
+.container-middle>view>image{
+    margin-top:20rpx;
+    width: 150rpx;
+    height: 150rpx;
+}
+
+.icon-shenglvehao:before {
+content: "\e708";
+}

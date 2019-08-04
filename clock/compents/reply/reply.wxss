@@ -1,0 +1,29 @@
+/* compents/reply/reply.wxss */
+.replycolor{
+    font-size: 30rpx;
+}
+.reply{
+    width: 100%;
+    height: 80rpx;
+    border: 1rpx solid #ececec;
+    background: rgb(230, 225, 225);
+    display: flex;
+    position: fixed;
+    left: 0rpx;
+    bottom: 0rpx;
+}
+.reply>input{
+    width: 75%;
+    height: 60rpx;
+    margin: auto 20rpx;
+    background: #fff;
+    padding-left: 5rpx;
+}
+.reply>button{
+    width: 20%;
+    height: 60rpx;
+    margin: auto 10rpx;
+    padding: 2rpx;
+    font-size: 30rpx;
+    line-height: 60rpx;
+}

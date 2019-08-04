@@ -1,6 +1,7 @@
 {
   "component": true,
   "usingComponents": {
-    "myAudio":"/compents/audio/index"
+    "myComInfo":"/compents/comInfo/index",
+    "myReply":"/compents/reply/reply"
   }
 }
