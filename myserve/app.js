@@ -148,7 +148,7 @@ app.get("/addComment",(req,res)=>{
         if(result.affectedRows>0)
             res.send({code:1,msg:"发布成功",pid:result.insertId});
         else{
-            res.send({code:-1,msg:"发布失败"});
+            res.send({code:0,msg:"发布失败"});
         }
     });
 });
@@ -168,19 +168,19 @@ app.get("/plList",(req,res)=>{
     //2:允许使用默认值  1 7  15:15
     if(!pno){pno=1}
     if(!pageSize){pageSize=4}
-    let sql="SELECT p.pid,p.ptime,p.ptext,p.place,p.state,v.cvideoUrl,a.caudioUrl,a.duration,u.pname,u.purl FROM plList p LEFT JOIN  clockVideo v ON p.pid=v.pid  LEFT JOIN clockAudio a ON p.pid=a.pid LEFT JOIN userList u ON p.uid=u.uid ORDER BY p.pid LIMIT ?,?";
+    let sql="SELECT p.pid,p.ptime,p.ptext,p.place,p.state,v.cvideoUrl,a.caudioUrl,a.duration,u.uid,u.pname,u.purl FROM plList p LEFT JOIN  clockVideo v ON p.pid=v.pid  LEFT JOIN clockAudio a ON p.pid=a.pid LEFT JOIN userList u ON p.uid=u.uid ORDER BY p.pid DESC LIMIT ?,?";
     var offset = (pno-1)*pageSize;
     pageSize = parseInt(pageSize);
     pool.query(sql,[offset,pageSize],(err,result)=>{
         if(err)throw err;
-        //console.log(result);
+        //console.log(result,pno);
         res.send({code:1,msg:"查询成功",data:result});
     });
 });
 //评论图片
 app.get("/findImg",(req,res)=>{
     let pid=req.query.pid;
-    let sql="SELECT cid,cimgUrl FROM clockImg WHERE pid=? ORDER BY pid";
+    let sql="SELECT cid,cimgUrl FROM clockImg WHERE pid=? ORDER BY pid DESC";
     pool.query(sql,[pid],(err,result)=>{
         if(err)throw err;
         //console.log(result,pid);
@@ -212,6 +212,75 @@ app.get("/fabList",(req,res)=>{
     let pid=req.query.pid;
     let uid=req.query.uid;
     let sql="SELECT fid FROM fabList WHERE pid=? AND uid=?";
+    pool.query(sql,[pid,uid],(err,result)=>{
+        if(err)throw err;
+        if(result.length>0)
+            res.send({code:1,msg:"查询成功"});
+        else
+            res.send({code:-1,msg:"查询失败"});
+    });
+});
+app.get("/fabNameList",(req,res)=>{
+    let pid=req.query.pid;
+    let sql="SELECT fid,uid FROM fabList WHERE pid=?";
+    pool.query(sql,[pid],(err,result)=>{
+        if(err)throw err;
+        console.log(1,result);
+        if(result.length>0)
+        {
+            let count=1;
+            let names=[];
+            for(let i=0;i<result.length;i++){
+                let sql1="SELECT * FROM userList WHERE uid=?";
+                pool.query(sql1,[result[i].uid],(err1,result1)=>{
+                    if(err1)throw err1;
+                    console.log(result1);
+                    names.push(result1[0]);
+                    if(count==result1.length) {
+                        if (result1.length > 0)
+                            res.send({code: 1, msg: "查询成功", data: names});
+                        else {
+                            res.send({code: -1, msg: "查询失败", data: names});
+                        }
+                    }
+                });
+            }
+        }
+        else
+            res.send({code:-1,msg:"查询失败"});
+    });
+});
+//点赞
+app.get("/addFab",(req,res)=>{
+    let pid=req.query.pid;
+    let uid=req.query.uid;
+    let ftime=new Date().getTime();
+    let sql="INSERT INTO fabList VALUES(NULL,?,?,?)";
+    pool.query(sql,[pid,uid,ftime],(err,result)=>{
+        if(err)throw err;
+        if(result.affectedRows>0)
+            res.send({code:1,msg:"点赞成功"});
+        else
+            res.send({code:0,msg:"点赞失败"});
+    });
+});
+//取消赞
+app.get("/delFab",(req,res)=>{
+    let pid=req.query.pid;
+    let uid=req.query.uid;
+    let sql="DELETE FROM fabList WHERE pid=? AND uid=?";
+    pool.query(sql,[pid,uid],(err,result)=>{
+        if(err)throw err;
+        if(result.affectedRows>0)
+            res.send({code:0,msg:"取消成功"});
+        else
+            res.send({code:1,msg:"取消失败"});
+    });
+});
+//回复列表
+app.get("/replyList",(req,res)=>{
+    let pid=req.query.pid;
+    let sql="SELECT fid FROM replyList WHERE pid=?";
     pool.query(sql,[pid,uid],(err,result)=>{
         if(err)throw err;
         if(result.length>0)

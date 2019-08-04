@@ -60,11 +60,10 @@ CREATE TABLE replyList(
     rid INT PRIMARY KEY AUTO_INCREMENT,
     pid INT,
     uid INT,
+    repUid INT,
     rtime BIGINT,
-    ptext VARCHAR(1024),
-    pimgUrl VARCHAR(256),
-    pvideoUrl VARCHAR(64),
-    paudioUrl  VARCHAR(64),
+    ptext VARCHAR(1024)
     FOREIGN KEY(pid) REFERENCES plList(pid),
+    FOREIGN KEY(repUid) REFERENCES userList(uid),
     FOREIGN KEY(uid) REFERENCES userList(uid)
 );
