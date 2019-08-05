@@ -138,7 +138,7 @@ app.get("/addComment",(req,res)=>{
     let place=req.query.place;
     let state=req.query.state;
     let time=new Date().getTime();
-    console.log(time,new Date());
+    //console.log(time,new Date());
     let warp=[uid,time,ptext,place,state];
     let pid=0;
     let sql="INSERT INTO plList VALUES(null,?,?,?,?,?)";
@@ -287,5 +287,22 @@ app.get("/replyList",(req,res)=>{
             res.send({code:1,msg:"查询成功"});
         else
             res.send({code:-1,msg:"查询失败"});
+    });
+});
+//添加回复
+app.get("/addReply",(req,res)=>{
+    let pid=req.query.pid;
+    let uid=req.query.uid;
+    let repUid=req.query.repUid;
+    let time=new Date().getTime();
+    let value=req.query.value;
+    let sql="INSERT INTO replyList VALUE(null,?,?,?,?,?)";
+    pool.query(sql,[pid,uid,repUid,time,value],(err,result)=>{
+        if(err)throw err;
+        if(result.affectedRows>0)
+            res.send({code:1,msg:"评论成功"});
+        else{
+            res.send({code:0,msg:"评论失败"});
+        }
     });
 });

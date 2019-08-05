@@ -62,7 +62,7 @@ CREATE TABLE replyList(
     uid INT,
     repUid INT,
     rtime BIGINT,
-    ptext VARCHAR(1024)
+    ptext VARCHAR(1024),
     FOREIGN KEY(pid) REFERENCES plList(pid),
     FOREIGN KEY(repUid) REFERENCES userList(uid),
     FOREIGN KEY(uid) REFERENCES userList(uid)
