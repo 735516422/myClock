@@ -1,5 +1,5 @@
 <!--compents/reply/reply.wxml-->
-<view class="reply" wx:if="{{myEnable}}">
-    <input placeholder-class="replycolor" type="text" placeholder="评论" focus="{{true}}" bindblur="getEnable"/>
-    <button type="button" value="发送">发送</button>
+<view class="reply" wx:if="{{myEnable}}" bindtap="isEnable" >
+    <input placeholder-class="replycolor" type="text" placeholder="评论" focus="{{myEnable}}"  bindinput="valChange" value="{{repValue}}" bindblur="getEnable"/>
+    <button type="button" value="发送" bindtap="addReply">发送</button>
 </view>

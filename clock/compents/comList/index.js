@@ -20,7 +20,8 @@ Component({
     fabNameList:[],//获赞列表名称
     fabNumList:[],//获赞数
     replyList:[],//回复
-    myReplyEnable:false//显示评论框
+    myReplyEnable:false,//显示评论框
+    replyObject:{} //评论编号用户
   },
   /**
    * 组件的方法列表
@@ -38,9 +39,13 @@ Component({
       let init=this.data.plList;
       console.log("init",init);
     },
-    getEnable:function(){
+    getEnable:function(e){
+      let o={};
+      o.pid=e.currentTarget.dataset.pid;
+      o.uid=-1;
       this.setData({
-        myReplyEnable:true
+        myReplyEnable:true,
+        replyObject:o
       });
     },
    /*获取评论*/

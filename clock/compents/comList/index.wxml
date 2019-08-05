@@ -10,7 +10,7 @@
                 <text class="{{fabList[plIndex]===1?'iconfont icon-aixin1':'iconfont icon-aixin'}}"></text>
                 <text >赞</text>
             </view>
-            <view data-pid="plInfo.pid" bindtap="getEnable">
+            <view data-pid="{{plInfo.pid}}" bindtap="getEnable" data-uid="{{plInfo.uid}}">
                 <text class="iconfont icon-pinglun"></text>
                 <text >评论</text>
             </view>
@@ -26,8 +26,9 @@
             </view>
             <view class="replyMid">
                 <text ></text>
+                <text ></text>
             </view>
         </view>
     </view>
 </view>
-<myReply myEnable="{{myReplyEnable}}"></myReply>
+<myReply myEnable="{{myReplyEnable}}" replyObject="{{replyObject}}"></myReply>
